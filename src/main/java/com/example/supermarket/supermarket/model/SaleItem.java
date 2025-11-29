@@ -1,17 +1,44 @@
 package com.example.supermarket.supermarket.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "sale_items")
 public class SaleItem {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @Column(nullable = false)
     private Long productId;
+    
+    @Column(nullable = false)
     private String productName;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private ProductCategory productCategory;
+    
+    @Column(nullable = false)
     private int quantity;
+    
+    @Column(nullable = false)
     private double unitPrice;
+    
+    @Column(nullable = false)
     private double discountPercentage;
+    
+    @Column(nullable = false)
     private double subtotal;
+    
+    @Column(nullable = false)
     private double discountAmount;
+    
+    @Column(nullable = false)
     private double totalPrice;
 
+    // Constructors
     public SaleItem() {}
 
     public SaleItem(Long productId, String productName, ProductCategory productCategory,

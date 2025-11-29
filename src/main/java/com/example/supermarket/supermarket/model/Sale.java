@@ -1,18 +1,38 @@
 package com.example.supermarket.supermarket.model;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "sales")
 public class Sale {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @Column(unique = true, nullable = false)
     private String transactionCode;
-    private List<SaleItem> items;
+    
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "sale_id")
+    private List<SaleItem> items = new ArrayList<>();
+    
+    @Column(nullable = false)
     private double totalAmount;
+    
+    @Column(nullable = false)
     private double totalDiscount;
+    
+    @Column(nullable = false)
     private double finalAmount;
+    
+    @Column(nullable = false)
     private LocalDateTime saleDate;
 
+    // Constructors
     public Sale() {
         this.items = new ArrayList<>();
         this.saleDate = LocalDateTime.now();
@@ -23,6 +43,11 @@ public class Sale {
         this.transactionCode = transactionCode;
         this.items = new ArrayList<>();
         this.saleDate = LocalDateTime.now();
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        saleDate = LocalDateTime.now();
     }
 
     // Getters and Setters

@@ -1,17 +1,38 @@
 package com.example.supermarket.supermarket.model;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "suppliers")
 public class Supplier {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @Column(nullable = false)
     private String name;
+    
+    @Column(unique = true, nullable = false)
     private String code;
+    
+    @Column(nullable = false)
     private String contactPerson;
+    
+    @Column(nullable = false)
     private String phone;
+    
+    @Column(nullable = false)
     private String email;
+    
+    @Column(length = 500)
     private String address;
+    
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    // Constructors
     public Supplier() {
         this.createdAt = LocalDateTime.now();
     }
@@ -26,6 +47,11 @@ public class Supplier {
         this.email = email;
         this.address = address;
         this.createdAt = LocalDateTime.now();
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
     }
 
     // Getters and Setters

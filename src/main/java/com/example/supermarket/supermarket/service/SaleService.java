@@ -67,9 +67,8 @@ public class SaleService {
     }
 
     public List<Sale> getSalesByDateRange(LocalDateTime startDate, LocalDateTime endDate) {
-        return saleRepository.findByDateRange(startDate, endDate);
+        return saleRepository.findBySaleDateBetween(startDate, endDate);
     }
-
     public double getTotalSalesAmount() {
         return saleRepository.findAll().stream()
                 .mapToDouble(Sale::getFinalAmount)
@@ -77,7 +76,7 @@ public class SaleService {
     }
 
     public double getTotalSalesAmountByDateRange(LocalDateTime startDate, LocalDateTime endDate) {
-        return saleRepository.findByDateRange(startDate, endDate).stream()
+        return saleRepository.findBySaleDateBetween(startDate, endDate).stream()
                 .mapToDouble(Sale::getFinalAmount)
                 .sum();
     }

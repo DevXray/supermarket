@@ -18,6 +18,20 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        // Cek apakah data sudah ada
+        if (supplierService.getTotalSuppliers() > 0) {
+            System.out.println("===================================");
+            System.out.println("Data already exists in database!");
+            System.out.println("Total Suppliers: " + supplierService.getTotalSuppliers());
+            System.out.println("Total Products: " + productService.getTotalProducts());
+            System.out.println("===================================");
+            return;
+        }
+
+        System.out.println("===================================");
+        System.out.println("Initializing sample data...");
+        System.out.println("===================================");
+
         // Create Suppliers
         Supplier supplier1 = new Supplier(null, "Fresh Foods Co.", "SUP001", 
                 "John Doe", "081234567890", "freshfoods@example.com", 
