@@ -3,6 +3,7 @@ package com.example.supermarket.supermarket.config;
 import com.example.supermarket.supermarket.model.*;
 import com.example.supermarket.supermarket.service.ProductService;
 import com.example.supermarket.supermarket.service.SupplierService;
+import com.example.supermarket.supermarket.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,9 @@ public class DataInitializer implements CommandLineRunner {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private UserService userService;
+
     @Override
     public void run(String... args) throws Exception {
         // Cek apakah data sudah ada
@@ -24,6 +28,7 @@ public class DataInitializer implements CommandLineRunner {
             System.out.println("Data already exists in database!");
             System.out.println("Total Suppliers: " + supplierService.getTotalSuppliers());
             System.out.println("Total Products: " + productService.getTotalProducts());
+            System.out.println("Total Users: " + userService.getTotalUsers());
             System.out.println("===================================");
             return;
         }
@@ -31,6 +36,15 @@ public class DataInitializer implements CommandLineRunner {
         System.out.println("===================================");
         System.out.println("Initializing sample data...");
         System.out.println("===================================");
+
+        // Create Default Users
+        try {
+            User admin = new User("admin", "admin123", "Administrator");
+            userService.createUser(admin);
+            System.out.println("✓ Default admin user created (username: admin, password: admin123)");
+        } catch (Exception e) {
+            System.out.println("⚠ Admin user already exists, skipping user creation");
+        }
 
         // Create Suppliers
         Supplier supplier1 = new Supplier(null, "Fresh Foods Co.", "SUP001", 
@@ -115,6 +129,9 @@ public class DataInitializer implements CommandLineRunner {
         System.out.println("Sample data has been initialized!");
         System.out.println("Total Suppliers: " + supplierService.getTotalSuppliers());
         System.out.println("Total Products: " + productService.getTotalProducts());
+        System.out.println("Total Users: " + userService.getTotalUsers());
+        System.out.println("\nDefault Login Credentials:");
+        System.out.println("Admin - Username: admin | Password: admin123");
         System.out.println("===================================");
     }
 }
