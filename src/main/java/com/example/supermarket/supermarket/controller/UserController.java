@@ -57,7 +57,13 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
-        return ResponseEntity.ok(userService.getAllUsers());
+        try {
+            List<User> users = userService.getAllUsers();
+            return ResponseEntity.ok(users);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GetMapping("/{id}")

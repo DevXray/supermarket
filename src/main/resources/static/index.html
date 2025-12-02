@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Supermarket Management System</title>
-    <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -13,6 +12,10 @@
         <header>
             <h1>🏪 Supermarket Management System</h1>
             <p class="subtitle">Kelola produk, supplier, dan transaksi dengan mudah</p>
+            <div style="position: absolute; top: 20px; right: 20px; text-align: right;">
+                <div id="userInfo" style="color: #667eea; font-weight: 600; margin-bottom: 5px;"></div>
+                <button onclick="logout()" class="btn btn-danger btn-sm">🚪 Logout</button>
+            </div>
         </header>
 
         <div class="tabs">
@@ -22,6 +25,7 @@
             <button class="tab" onclick="showTab('suppliers')">🏢 Supplier</button>
             <button class="tab" onclick="showTab('sales')">💰 Riwayat Penjualan</button>
             <button class="tab" onclick="showTab('inventory')">📋 Inventori</button>
+            <button class="tab" onclick="showTab('users')">👥 Manajemen User</button>
         </div>
 
         <!-- Dashboard Tab -->
@@ -95,7 +99,7 @@
                             <span class="shadow"></span>
                             <span class="edge"></span>
                             <div class="front">
-                                <span>💳 Pay Bayar</span>
+                                <span>💳 Bayar</span>
                             </div>
                         </button>
                     </div>
@@ -225,11 +229,61 @@
                 <div class="loading">Memuat data...</div>
             </div>
         </div>
+
+        <!-- Users Management Tab -->
+        <div id="users" class="tab-content">
+            <h2 style="margin-bottom: 20px;">👥 Manajemen User</h2>
+            
+            <div class="grid-2">
+                <div>
+                    <h3 id="userFormTitle">Tambah User Baru</h3>
+                    <form id="userForm">
+                        <input type="hidden" id="userId">
+                        <input type="hidden" id="isEditMode">
+                        
+                        <div class="form-group">
+                            <label>Username *</label>
+                            <input type="text" id="userUsername" required minlength="3">
+                            <small style="color: #6b7280;">Minimal 3 karakter</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Password * <span id="passwordLabel">(minimal 6 karakter)</span></label>
+                            <input type="password" id="userPassword" minlength="6">
+                            <small style="color: #6b7280;">Biarkan kosong jika tidak ingin mengubah password (saat edit)</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Nama Lengkap *</label>
+                            <input type="text" id="userFullName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select id="userActive">
+                                <option value="true">Aktif</option>
+                                <option value="false">Tidak Aktif</option>
+                            </select>
+                        </div>
+
+                        <div style="display: flex; gap: 10px;">
+                            <button type="submit" class="btn btn-primary" id="userSubmitBtn">➕ Tambah User</button>
+                            <button type="button" class="btn btn-warning" id="userCancelBtn" onclick="cancelEditUser()" style="display: none;">❌ Batal</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div>
+                    <h3>Daftar User</h3>
+                    <div id="userList">
+                        <div class="loading">Memuat data...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
     <script src="script.js"></script>
 </body>
 </html>
